@@ -10,6 +10,10 @@ public class Sudoku {
         this.grid = grid;
     }
 
+    public void setCell(int i, int j, int value){
+        this.grid[i][j] = value;
+    }
+
     // Prints out sudoku board to the terminal
     public void printSudoku(){
         int num_rows = 0;
@@ -51,7 +55,7 @@ public class Sudoku {
                 this.grid[empty[0]][empty[1]] = 0;
             }
         }
-        return false;
+        return true;
     }
 
     // Find empty spaces on the board
