@@ -1,6 +1,9 @@
 package JSuso;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,8 +38,18 @@ public class SudokuGUI implements ActionListener {
         textPanes = new JTextPane[9][9];
         for (int row = 0; row < 9; row++){
             for (int col = 0; col < 9; col++){
-                JTextPane numberBox = new JTextPane();
-
+                // Makes individual textpanes and sets max insertString length to 1
+                JTextPane numberBox = new JTextPane(new DefaultStyledDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if ((getLength() + str.length()) <= 1) {
+                            super.insertString(offs, str, a);
+                        } else {
+                            // makes a noise when user tries to add a second number to the same textpane
+                            Toolkit.getDefaultToolkit().beep();
+                        }
+                    }
+                });
                 numberBox.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 textPanes[row][col] = numberBox;
                 board.add(textPanes[row][col]);
