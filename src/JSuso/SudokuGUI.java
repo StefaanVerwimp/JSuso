@@ -9,7 +9,6 @@ public class SudokuGUI implements ActionListener {
 
     public JFrame frame;
     public static JTextPane[][] textPanes;
-
     public static final int[][] zeroSudoku = new int[][]{
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -69,6 +68,7 @@ public class SudokuGUI implements ActionListener {
         frame.setVisible(true);
     }
 
+    // Gets text from GUI, checks correctness input, and makes a Sudoku object
     private static Sudoku makeSudoku(Sudoku emptySudoku){
         for (int row = 0; row < 9; row++){
             for (int col = 0; col < 9; col++){
@@ -89,6 +89,8 @@ public class SudokuGUI implements ActionListener {
         return emptySudoku;
     }
 
+
+    // Fills the GUI board using the solved Sudoku
     private void fill_in(JTextPane[][] textPanes, Sudoku solved){
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
