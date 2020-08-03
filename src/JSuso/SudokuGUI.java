@@ -1,12 +1,9 @@
 package JSuso;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class SudokuGUI implements ActionListener {
 
@@ -36,6 +33,7 @@ public class SudokuGUI implements ActionListener {
 
         // Make empty board with textPanes
         textPanes = new JTextPane[9][9];
+        Font font = new Font(Font.DIALOG, Font.BOLD, 30);
         for (int row = 0; row < 9; row++){
             for (int col = 0; col < 9; col++){
                 // Makes individual textpanes and sets max insertString length to 1
@@ -50,6 +48,14 @@ public class SudokuGUI implements ActionListener {
                         }
                     }
                 });
+
+                // Centers text horizontally
+                StyledDocument doc = numberBox.getStyledDocument();
+                SimpleAttributeSet center = new SimpleAttributeSet();
+                StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+                doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+                numberBox.setFont(font);
                 numberBox.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 textPanes[row][col] = numberBox;
                 board.add(textPanes[row][col]);
@@ -141,5 +147,4 @@ public class SudokuGUI implements ActionListener {
                 break;
         }
     }
-
 }
