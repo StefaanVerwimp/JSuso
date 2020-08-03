@@ -55,7 +55,7 @@ public class Sudoku {
                 this.grid[empty[0]][empty[1]] = 0;
             }
         }
-        return true;
+        return false;
     }
 
     // Find empty spaces on the board
@@ -103,6 +103,18 @@ public class Sudoku {
         // If input is valid, returns true
         return true;
     }
+
+    public boolean check_solved() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (this.grid[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 //    public static void main(String[] args) {
 //        Sudoku suso = new Sudoku(new int[][]{
