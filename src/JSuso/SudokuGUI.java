@@ -42,7 +42,8 @@ public class SudokuGUI implements ActionListener, KeyListener {
                     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
                         if ((getLength() + str.length()) <= 1) {
                             super.insertString(offs, str, a);
-                        } else if (getLength() + str.length() > 1){
+                        }
+                        else {
                             // makes a noise when user tries to add a second number to the same textpane
                             Toolkit.getDefaultToolkit().beep();
                         }
@@ -88,6 +89,8 @@ public class SudokuGUI implements ActionListener, KeyListener {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+
 
     // Gets text from GUI, checks correctness input, and makes a Sudoku object
     private static Sudoku makeSudoku(Sudoku emptySudoku){
@@ -198,6 +201,7 @@ public class SudokuGUI implements ActionListener, KeyListener {
                     }
                     break;
                 case KeyEvent.VK_DELETE:
+                    e.consume();
                 case KeyEvent.VK_BACK_SPACE:
                     pane.setText(" ");
                     break;
