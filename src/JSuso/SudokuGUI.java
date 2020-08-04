@@ -5,7 +5,7 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SudokuGUI implements ActionListener {
+public class SudokuGUI implements ActionListener, KeyListener {
 
     public JFrame frame;
     public static JTextPane[][] textPanes;
@@ -42,12 +42,14 @@ public class SudokuGUI implements ActionListener {
                     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
                         if ((getLength() + str.length()) <= 1) {
                             super.insertString(offs, str, a);
-                        } else {
+                        } else if (getLength() + str.length() > 1){
                             // makes a noise when user tries to add a second number to the same textpane
                             Toolkit.getDefaultToolkit().beep();
                         }
                     }
                 });
+
+                numberBox.addKeyListener(this);
 
                 // Centers text horizontally
                 StyledDocument doc = numberBox.getStyledDocument();
@@ -146,5 +148,66 @@ public class SudokuGUI implements ActionListener {
                 frame.dispose();
                 break;
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        JTextPane pane = (JTextPane) e.getSource();
+        try {
+            switch (keyCode){
+                case KeyEvent.VK_UP:
+                    for (int row = 0; row < 9; row++){
+                        for (int col = 0; col < 9; col++) {
+                            if (textPanes[row][col].equals(pane)){
+                                textPanes[row-1][col].grabFocus();
+                            }
+                        }
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    for (int row = 0; row < 9; row++){
+                        for (int col = 0; col < 9; col++) {
+                            if (textPanes[row][col].equals(pane)){
+                                textPanes[row+1][col].grabFocus();
+                            }
+                        }
+                    }
+                    break;
+                case KeyEvent.VK_LEFT:
+                    for (int row = 0; row < 9; row++){
+                        for (int col = 0; col < 9; col++) {
+                            if (textPanes[row][col].equals(pane)){
+                                textPanes[row][col-1].grabFocus();
+                            }
+                        }
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    for (int row = 0; row < 9; row++){
+                        for (int col = 0; col < 9; col++) {
+                            if (textPanes[row][col].equals(pane)){
+                                textPanes[row][col+1].grabFocus();
+                            }
+                        }
+                    }
+                    break;
+                case KeyEvent.VK_DELETE:
+                case KeyEvent.VK_BACK_SPACE:
+                    pane.setText(" ");
+                    break;
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) { }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
