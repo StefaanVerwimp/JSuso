@@ -64,6 +64,7 @@ public class SudokuGUI implements ActionListener, KeyListener {
                 board.add(textPanes[row][col]);
             }
         }
+        colorizeSquares();
 
         JButton exit = new JButton("Exit");
         exit.setActionCommand("exit");
@@ -118,7 +119,38 @@ public class SudokuGUI implements ActionListener, KeyListener {
     private void fill_in(JTextPane[][] textPanes, Sudoku solved){
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+                // This string is necessary, foreground needs to be set after it is filled in, but
+                // checking if cell is empty needs to happen before that...
+                String filled = textPanes[i][j].getText();
                 textPanes[i][j].setText(String.valueOf(solved.grid[i][j]));
+                if (filled.equals("")){
+                    textPanes[i][j].setForeground(new Color(205, 50, 20));
+                }
+            }
+        }
+    }
+
+    private static void colorizeSquares() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                // First and last three rows
+                if (row < 3 || row > 5) {
+                    // First three columns
+                    if (col < 3) {
+                        textPanes[row][col].setBackground(Color.LIGHT_GRAY);
+                    }
+                    // Last three columns
+                    if (col >= 6) {
+                        textPanes[row][col].setBackground(Color.LIGHT_GRAY);
+                    }
+                }
+                // Middle three rows
+                if (row > 2 && row < 6) {
+                    // Middle three columns
+                    if (col > 2 && col < 6) {
+                        textPanes[row][col].setBackground(Color.LIGHT_GRAY);
+                    }
+                }
             }
         }
     }
@@ -143,6 +175,7 @@ public class SudokuGUI implements ActionListener, KeyListener {
             case "reset":
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
+                        textPanes[i][j].setForeground(Color.DARK_GRAY);
                         textPanes[i][j].setText("");
                     }
                 }
